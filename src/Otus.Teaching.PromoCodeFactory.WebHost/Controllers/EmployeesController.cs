@@ -71,5 +71,54 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
 
             return employeeModel;
         }
+
+        //Create/Delete/Update
+        /// <summary>
+        /// Удалить сотрудника по Id
+        /// </summary>
+        /// <returns></returns>
+        [HttpDelete("{id:guid}")]
+        public async Task<string> DeleteEmployeeByIdAsync(Guid id)
+        {
+            return await _employeeRepository.DelByIdAsync(id);
+        }
+
+        /// <summary>
+        /// Обновить данные сотрудника по Id
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id}/{newName}/{newLastName}/{newEmail}/{AppliedPromocodesCount}")]
+        public async Task<ActionResult<string>> UpdateEmployeeByIdAsync(Guid id, string newName, string newLastName, string newEmail, [FromBody]List<Role> newRoles, int AppliedPromocodesCount )
+        {
+            var employee = await _employeeRepository.GetByIdAsync(id);
+            employee.FirstName = newName;
+            employee.LastName = newLastName;
+            employee.Email = newEmail;
+            employee.Roles = new List<Role>(newRoles);
+            employee.AppliedPromocodesCount = AppliedPromocodesCount;
+
+
+            return await _employeeRepository.UpdateAsync(employee);
+        }
+
+        /// <summary>
+        /// Создать анкету сотрудника
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("{newName}/{newLastName}/{newEmail}/{AppliedPromocodesCount}")]
+        public async Task<ActionResult<string>> CreateEmployeeAsync(string newName, string newLastName, string newEmail, [FromBody] List<Role> newRoles, int AppliedPromocodesCount)
+        {
+
+            var employee = new Employee { Id = Guid.NewGuid(), 
+                                          FirstName = newName,
+                                          LastName = newLastName,
+                                          Email = newEmail,
+                                          Roles = newRoles,
+                AppliedPromocodesCount = AppliedPromocodesCount
+            };
+            return await _employeeRepository.CreateAsync(employee);
+        }
+
+
     }
 }
