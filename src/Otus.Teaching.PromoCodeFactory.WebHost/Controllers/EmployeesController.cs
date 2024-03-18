@@ -78,9 +78,19 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpDelete("{id:guid}")]
-        public async Task<string> DeleteEmployeeByIdAsync(Guid id)
+        public async Task<ActionResult<string>> DeleteEmployeeByIdAsync(Guid id)
         {
-            return await _employeeRepository.DelByIdAsync(id);
+            var employee = await _employeeRepository.GetByIdAsync(id);
+
+            if (employee == null)
+                return NotFound();
+
+
+            var ret = await _employeeRepository.DelByIdAsync(id);
+            if (ret.Equals("OK"))
+                return Ok();
+
+            return BadRequest();
         }
 
         /// <summary>
@@ -91,14 +101,20 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
         public async Task<ActionResult<string>> UpdateEmployeeByIdAsync(Guid id, string newName, string newLastName, string newEmail, [FromBody]List<Role> newRoles, int AppliedPromocodesCount )
         {
             var employee = await _employeeRepository.GetByIdAsync(id);
+
+            if (employee == null) 
+                return NotFound();
             employee.FirstName = newName;
             employee.LastName = newLastName;
             employee.Email = newEmail;
             employee.Roles = new List<Role>(newRoles);
             employee.AppliedPromocodesCount = AppliedPromocodesCount;
 
+            var ret = _employeeRepository.UpdateAsync(employee);
+            if (ret.Equals("OK"))
+                return Ok();
 
-            return await _employeeRepository.UpdateAsync(employee);
+            return BadRequest();
         }
 
         /// <summary>
@@ -116,6 +132,10 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
                                           Roles = newRoles,
                 AppliedPromocodesCount = AppliedPromocodesCount
             };
+
+           // var ret = await _employeeRepository.CreateAsync(employee);
+           // if (!ret.Equals("") { }
+
             return await _employeeRepository.CreateAsync(employee);
         }
 
