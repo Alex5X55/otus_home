@@ -7,12 +7,23 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Otus.Teaching.PromoCodeFactory.Core\Otus.Teaching.PromoCodeFactory.Core.csproj" />
-      <ProjectReference Include="..\Otus.Teaching.PromoCodeFactory.DataAccess\Otus.Teaching.PromoCodeFactory.DataAccess.csproj" />
+      <Compile Remove="Models\Role\RoleItemResponse.cs" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Infrastructure\Infrastructure.Repositories.Implementations\Infrastructure.Repositories.Implementations.csproj" />
+      <ProjectReference Include="..\Otus.Teaching.PromoCodeFactory.Core\Otus.Teaching.PromoCodeFactory.Core.csproj" />
+      <ProjectReference Include="..\Otus.Teaching.PromoCodeFactory.DataAccess\Otus.Teaching.PromoCodeFactory.DataAccess.csproj" />
+      <ProjectReference Include="..\Services\Services.Abstractions\Services.Abstractions.csproj" />
+      <ProjectReference Include="..\Services\Services.Contracts\Services.Contracts.csproj" />
+      <ProjectReference Include="..\Services\Services.Implementations\Services.Implementations.csproj" />
+      <ProjectReference Include="..\Services\Services.Repositories.Abstractions\Services.Repositories.Abstractions.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="13.0.1" />
       <PackageReference Include="NSwag.AspNetCore" Version="13.5.0" />
+      <PackageReference Include="UmbracoCms.Core" Version="8.18.14" />
     </ItemGroup>
 
 </Project>

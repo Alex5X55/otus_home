@@ -1,8 +1,29 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
     </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="Repositories\**" />
+      <EmbeddedResource Remove="Repositories\**" />
+      <None Remove="Repositories\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.3">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="8.0.3" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.3">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="UmbracoCms.Core" Version="8.18.14" />
+    </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Otus.Teaching.PromoCodeFactory.Core\Otus.Teaching.PromoCodeFactory.Core.csproj" />

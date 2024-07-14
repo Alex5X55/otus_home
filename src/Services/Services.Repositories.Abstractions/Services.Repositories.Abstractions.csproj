@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="IEmployeeRepository.cs" />
+    <Compile Remove="IRoleRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="UmbracoCms.Core" Version="8.18.14" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Otus.Teaching.PromoCodeFactory.Core\Otus.Teaching.PromoCodeFactory.Core.csproj" />
+    <ProjectReference Include="..\Services.Contracts\Services.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

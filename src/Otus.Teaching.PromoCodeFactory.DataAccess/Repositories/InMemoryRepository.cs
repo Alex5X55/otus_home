@@ -10,7 +10,7 @@ namespace Otus.Teaching.PromoCodeFactory.DataAccess.Repositories
 {
     public class InMemoryRepository<T>
         : IRepository<T>
-        where T: BaseEntity
+        where T: IBaseEntity<T>
     {
         protected IEnumerable<T> Data { get; set; }
 
@@ -26,25 +26,25 @@ namespace Otus.Teaching.PromoCodeFactory.DataAccess.Repositories
 
         public Task<T> GetByIdAsync(Guid id)
         {
-            return Task.FromResult(Data.FirstOrDefault(x => x.Id == id));
+            return Task.FromResult(Data.FirstOrDefault(x => x.Id.Equals(id)));
         }
 
         public Task<string> DelByIdAsync(Guid id)
         {
-            if (!Data.Any(x => x.Id == id)) return Task.FromResult("ERROR");
+            if (!Data.Any(x => x.Id.Equals(id))) return Task.FromResult("ERROR");
             
-            Data = Data.Where(x => x.Id != id);
+            Data = Data.Where(x => !x.Id.Equals(id));
             return Task.FromResult("OK");
         }
 
 
         public Task<string> UpdateAsync(T t)
         {
-            var temp = Data.Where(x => x.Id == t.Id).SingleOrDefault();
+            var temp = Data.Where(x => x.Id.Equals(t.Id)).SingleOrDefault();
 
             temp = t;
 
-            var tempList = Data.Where(x=>x.Id != temp.Id).ToList();
+            var tempList = Data.Where(x=>!x.Id.Equals(temp.Id)).ToList();
             tempList.Add(t);
 
             Data = tempList.AsEnumerable();

@@ -2,8 +2,8 @@
 
 namespace Otus.Teaching.PromoCodeFactory.Core.Domain
 {
-    public class BaseEntity
+    public interface IBaseEntity<Tid>
     {
-        public Guid Id { get; set; }
+        public Tid Id { get; set; }
     }
 }
