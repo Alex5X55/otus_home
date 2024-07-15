@@ -14,12 +14,6 @@ namespace Infrastructure.Repositories.Implementations
     {
         public CustomerPreferenceRepository(DatabaseContext context) : base(context) { }
 
-        /// <summary>
-        /// Добавить в базу одну сущность.
-        /// </summary>
-        /// <param name="customerpreference"> Сущность для добавления. </param>
-        /// <param name="cancellationToken"></param>
-        /// <returns> Добавленная сущность. </returns>
         public override async Task<CustomerPreference> AddAsync(CustomerPreference customerPreference, CancellationToken cancellationToken)
         {
             Context.CustomerPreferences.Add(customerPreference);
@@ -28,19 +22,11 @@ namespace Infrastructure.Repositories.Implementations
             return await GetByIdAsync(customerPreference.Id, cancellationToken);
         }
 
-        /// <summary>
-        /// Добавить в базу массив сущностей.
-        /// </summary>
-        /// <param name="customerpreference"> Сущность для добавления. </param>
-        /// <param name="cancellationToken"></param>
-        /// <returns> Добавленные сущности. </returns>
-        //public override async Task AddRangeAsync(ICollection<CustomerPreference> customerPreferences, CancellationToken cancellationToken)
         public override async Task AddRangeAsync(ICollection<CustomerPreference> customerPreferences, CancellationToken cancellationToken)
         {
             Context.CustomerPreferences.AddRange(customerPreferences);
             await Context.SaveChangesAsync(cancellationToken);
         }
-
 
         public override async Task<bool> DeleteRangeAsync(ICollection<CustomerPreference> customerPreferences, CancellationToken cancellationToken)
         {
@@ -48,9 +34,5 @@ namespace Infrastructure.Repositories.Implementations
             await Context.SaveChangesAsync(cancellationToken);
             return true;
         }
-
-
-
-
     }
 }

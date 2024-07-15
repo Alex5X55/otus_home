@@ -19,10 +19,12 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Mapping
             CreateMap<CreatingCustomerDto, Customer>()
               .ForMember(d => d.Id, s => s.MapFrom(s => Guid.NewGuid()))
               .ForMember(d => d.PromoCodes, s => s.Ignore())
-              .ForMember(d => d.Preferences, s => s.Ignore());
+              .ForMember(d => d.Preferences, s => s.Ignore())
+              .ForMember(d => d.Deleted, s => s.Ignore()); // Миграция CustomerDeletedFlag
             CreateMap<UpdateCustomerDto, Customer>()
               .ForMember(d => d.PromoCodes, s => s.Ignore())
-              .ForMember(d => d.Preferences, s => s.Ignore());
+              .ForMember(d => d.Preferences, s => s.Ignore())
+              .ForMember(d => d.Deleted, s => s.Ignore()); // Миграция CustomerDeletedFlag;
             //CreateMap<Customer, CustomersDto>();
             //CreateMap<CustomersDto, CustomerResponse>()
             //  .ForMember(d => d.FullName, s => s.MapFrom(s => $"{s.FirstName} {s.LastName}"))

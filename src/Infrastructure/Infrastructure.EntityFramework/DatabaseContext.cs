@@ -21,7 +21,7 @@ namespace Infrastructure.EntityFramework
         public DbSet<Role> Roles { get; set; }
 
         /// <summary>
-        /// Коллеги.
+        /// Клиенты.
         /// </summary>
         public DbSet<Customer> Customers { get; set; }
 
@@ -36,12 +36,12 @@ namespace Infrastructure.EntityFramework
         public DbSet<Preference> Preferences { get; set; }
 
         /// <summary>
-        /// Предпочтения.
+        /// Предпочтения рользователей.
         /// </summary>
         public DbSet<CustomerPreference> CustomerPreferences { get; set; }
 
         /// <summary>
-        /// Предпочтения.
+        /// Промокоды пользователей.
         /// </summary>
         public DbSet<CustomerPromoCode> CustomerPromoCode { get; set; }
 
@@ -60,16 +60,17 @@ namespace Infrastructure.EntityFramework
 
         public void Initialize()
         {
-            Database.EnsureDeleted();
-            Database.EnsureCreated(); //Migrate(); 
+            //Database.EnsureDeleted();
+            //Database.EnsureCreated(); 
+            /////Database.Migrate(); 
 
-            AddRange(FakeDataFactory.Roles);
-            AddRange(FakeDataFactory.Preferences);
-            AddRange(FakeDataFactory.Employees);
-            AddRange(FakeDataFactory.Customers);
-            AddRange(FakeDataFactory.PromoCodes);
+            //AddRange(FakeDataFactory.Roles);
+            //AddRange(FakeDataFactory.Preferences);
+            //AddRange(FakeDataFactory.Employees);
+            //AddRange(FakeDataFactory.Customers);
+            //AddRange(FakeDataFactory.PromoCodes);
             
-            SaveChanges();
+            //SaveChanges();
 
         }
 

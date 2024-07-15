@@ -15,12 +15,6 @@ namespace Infrastructure.Repositories.Implementations
     {
         public CustomerRepository(DatabaseContext context) : base(context) { }
 
-        /// <summary>
-        /// Добавить в базу одну сущность.
-        /// </summary>
-        /// <param name="customer"> Сущность для добавления. </param>
-        /// <param name="cancellationToken"></param>
-        /// <returns> Добавленная сущность. </returns>
         public override async Task<Customer> AddAsync(Customer customer, CancellationToken cancellationToken)
         {
             Context.Customers.Add(customer);
@@ -41,42 +35,20 @@ namespace Infrastructure.Repositories.Implementations
                     oldCustomer.LastName = customer.LastName;
                 if (customer.Email != null)
                     oldCustomer.Email = customer.Email;
-                
-                
-
 
                 Context.Customers.Update(oldCustomer);
                 await Context.SaveChangesAsync(cancellationToken);
                 return await GetByIdAsync(customer.Id, cancellationToken);
             }
-
             return null;
         }
 
-
-
-
-
-
-
-
-        /// <summary>
-        /// Получить список сущностей.
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns> Список сотрудников. </returns>
         public override async Task<IEnumerable<Customer>> GetAllAsync(CancellationToken cancellationToken, bool asNoTracking = false)
         {
             var query = Context.Set<Customer>().AsQueryable();
             return await query.ToListAsync(cancellationToken);
         }
 
-        /// <summary>
-        /// Получить сущность по ID.
-        /// </summary>
-        /// <param name="id"> Id сущности. </param>
-        /// <param name="cancellationToken"></param>
-        /// <returns> Сотрудник. </returns>
         public override async Task<Customer> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             var query = Context.Set<Customer>().AsQueryable();
@@ -115,10 +87,5 @@ namespace Infrastructure.Repositories.Implementations
             await Context.SaveChangesAsync(cancellationToken);
             return answer;
         }
-
-
-
-
-
     }
 }

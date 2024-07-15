@@ -12,12 +12,6 @@ namespace Infrastructure.Repositories.Implementations
     {
         public CustomerPromoCodeRepository(DatabaseContext context) : base(context) { }
 
-        /// <summary>
-        /// Добавить в базу одну сущность.
-        /// </summary>
-        /// <param name="customerpreference"> Сущность для добавления. </param>
-        /// <param name="cancellationToken"></param>
-        /// <returns> Добавленная сущность. </returns>
         public override async Task<CustomerPromoCode> AddAsync(CustomerPromoCode customerPromoCode, CancellationToken cancellationToken)
         {
             Context.CustomerPromoCode.Add(customerPromoCode);
@@ -25,8 +19,5 @@ namespace Infrastructure.Repositories.Implementations
 
             return await GetByIdsAsync(customerPromoCode.CustomerId, customerPromoCode.PromoCodeId, cancellationToken);
         }
-
-
-
     }
 }

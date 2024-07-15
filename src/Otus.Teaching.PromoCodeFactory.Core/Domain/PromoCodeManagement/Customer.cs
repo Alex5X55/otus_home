@@ -18,5 +18,7 @@ namespace Otus.Teaching.PromoCodeFactory.Core.Domain.PromoCodeManagement
         public virtual IList<CustomerPromoCode> PromoCodes { get; set; }
         // public virtual PromoCode Promocode { get; set; }
         // public virtual Guid PromocodeId { get; set; }
+        public bool Deleted { get; set; }
+
     }
 }

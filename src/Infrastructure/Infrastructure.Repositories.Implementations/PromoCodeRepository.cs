@@ -14,28 +14,17 @@ namespace Infrastructure.Repositories.Implementations
     {
         public PromoCodeRepository(DatabaseContext context) : base(context) { }
 
-        /// <summary>
-        /// Получить список предпочтений.
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns> Список предпочтений. </returns>
         public override async Task<IEnumerable<PromoCode>> GetAllAsync(CancellationToken cancellationToken, bool asNoTracking = false)
         {
             var query = Context.Set<PromoCode>().AsQueryable();
             return await query.ToListAsync(cancellationToken);
         }
 
-        /// <summary>
-        /// Получить список предпочтений.
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns> Список предпочтений. </returns>
         public override async Task<PromoCode> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             var query = Context.Set<PromoCode>().AsQueryable();
             return await query.SingleOrDefaultAsync(c => c.Id == id ,cancellationToken);
         }
-
 
         public override async Task<PromoCode> AddAsync(PromoCode promoCode, CancellationToken cancellationToken)
         {
@@ -44,7 +33,5 @@ namespace Infrastructure.Repositories.Implementations
 
             return await GetByIdAsync(promoCode.Id, cancellationToken);
         }
-
-
     }
 }

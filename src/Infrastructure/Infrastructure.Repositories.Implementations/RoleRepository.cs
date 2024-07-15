@@ -17,13 +17,6 @@ namespace Infrastructure.Repositories.Implementations
     {
         public RoleRepository(DatabaseContext context) : base(context) { }
 
-
-        /// <summary>
-        /// Добавить в базу одну сущность.
-        /// </summary>
-        /// <param name="role"> Сущность для добавления. </param>
-        /// <param name="cancellationToken"></param>
-        /// <returns> Добавленная сущность. </returns>
         public override async Task<Role> AddAsync(Role role, CancellationToken cancellationToken)
         {
             Context.Roles.Add(role);
@@ -32,35 +25,18 @@ namespace Infrastructure.Repositories.Implementations
             return await GetByIdAsync(role.Id, cancellationToken);
         }
 
-        /// <summary>
-        /// Получить список сущностей.
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns> Список ролей. </returns>
         public override async Task<IEnumerable<Role>> GetAllAsync(CancellationToken cancellationToken, bool asNoTracking = false)
         {
             var query = Context.Set<Role>().AsQueryable();
             return await query.ToListAsync(cancellationToken);
         }
 
-        /// <summary>
-        /// Получить сущность по ID.
-        /// </summary>
-        /// <param name="id"> Id сущности. </param>
-        /// <param name="cancellationToken"></param>
-        /// <returns> Роль. </returns>
         public override async Task<Role> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             var query = Context.Set<Role>().AsQueryable();
             return await query.SingleOrDefaultAsync(c => c.Id == id, cancellationToken);
         }
 
-        /// <summary>
-        /// Изменить в базе одну сущность.
-        /// </summary>
-        /// <param name="role"> Сущность для добавления. </param>
-        /// <param name="cancellationToken"></param>
-        /// <returns> Добавленная сущность. </returns>
         public override async Task<Role> UpdateAsync(Role role, CancellationToken cancellationToken)
         {
             var query = Context.Set<Role>().AsQueryable();
@@ -91,9 +67,7 @@ namespace Infrastructure.Repositories.Implementations
             try
                 {
                  var query = Context.Set<Role>().AsQueryable();
-                //var role = await GetByIdAsync(id, cancellationToken);
                 if (await query.Where(r => r.Id == id).ExecuteDeleteAsync(cancellationToken) == 0)
-                //if (Context.Roles.Remove(role) == null)
                 {
                     answer.answerStatus = AnswerStatus.NotFound;
                     answer.text = $"Роль id {id} не найдена";

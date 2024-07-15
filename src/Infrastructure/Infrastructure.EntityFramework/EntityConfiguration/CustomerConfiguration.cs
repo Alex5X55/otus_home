@@ -15,12 +15,12 @@ namespace Infrastructure.EntityFramework.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<Customer> builder)
         {
-            // builder.HasKey(customer => customer.Id);
-            // builder.HasIndex(customer => customer.Id);
+           // builder.HasKey(customer => customer.Id);
+           // builder.HasIndex(customer => customer.Id);
            // builder
-            //     .HasOne(customer => customer.Promocode)
-            //     .WithMany()
-            //     .HasForeignKey(customer => customer.PromocodeId);
+           //     .HasOne(customer => customer.Promocode)
+           //     .WithMany()
+           //     .HasForeignKey(customer => customer.PromocodeId);
 
             builder.Property(customer => customer.FirstName).HasMaxLength(50).IsRequired();
             builder.Property(customer => customer.LastName).HasMaxLength(50).IsRequired();

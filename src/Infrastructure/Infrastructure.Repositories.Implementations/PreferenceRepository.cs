@@ -16,30 +16,17 @@ namespace Infrastructure.Repositories.Implementations
     {
         public PreferenceRepository(DatabaseContext context) : base(context) { }
 
-        /// <summary>
-        /// Получить список предпочтений.
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns> Список предпочтений. </returns>
         public override async Task<IEnumerable<Preference>> GetAllAsync(CancellationToken cancellationToken, bool asNoTracking = false)
         {
             var query = Context.Set<Preference>().AsQueryable();
             return await query.ToListAsync(cancellationToken);
         }
 
-        /// <summary>
-        /// Получить сотрудника.
-        /// </summary>
-        /// <param name="id"> Идентификатор. </param>
-        /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns> ДТО курса. </returns>
         public override async Task<Preference> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             var query = Context.Set<Preference>().AsQueryable();
             return await query.SingleOrDefaultAsync(c => c.Id == id, cancellationToken);
         }
-
-
 
     }
 }
