@@ -51,6 +51,12 @@ namespace Infrastructure.Repositories.Implementations
             return await _entitySet.FindAsync((object)id);
         }
 
+        public virtual async Task<T> GetByIdsAsync(Guid id, Guid id2, CancellationToken cancellationToken)
+        {
+            return await _entitySet.FindAsync((object)id, (object)id2);
+        }
+
+
         #endregion
 
         #region GetAll

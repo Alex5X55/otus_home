@@ -43,9 +43,17 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
         }
 
         /// <summary>
-        /// Получить все промокоды
+        /// Получить список промокодов
         /// </summary>
-        /// <returns></returns>
+        /// <param name="СancellationToken">сancellationToken</param>
+        /// <returns>Список промокодов</returns>
+        /// <remarks>
+        /// Simple request:
+        ///
+        /// "https://localhost:9001/api/v1/Promocodes"
+        ///
+        /// </remarks>
+        /// <response code="200">Получили список промокодов</response>
         [HttpGet]
         public async Task<ActionResult<List<PromoCodeShortResponse>>> GetPromocodesAsync(CancellationToken cancellationToken)
         {
@@ -58,9 +66,18 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
         }
 
         /// <summary>
-        /// Получить промокод по id
+        /// Получить промокод по идентификатору id
         /// </summary>
-        /// <returns></returns>
+        /// <param name="id">Идентификатор</param>
+        /// <param name="CancellationToken">cancellationToken</param>
+        /// <returns>Промокод</returns>
+        /// <remarks>
+        /// Simple request:
+        ///
+        /// "https://localhost:9001/api/v1/PromoCodes/id"
+        ///
+        /// </remarks>
+        /// <response code="200">Получили промокод</response>
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<PromoCodeResponce>> GetPromocodeByIdAsync(Guid id, CancellationToken cancellationToken)
         {
@@ -84,9 +101,27 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
 
 
         /// <summary>
-        /// Создать промокод и выдать его клиентам с указанным предпочтением
+        /// Создать новый промокод
         /// </summary>
-        /// <returns></returns>
+        /// <param name="GivePromoCodeRequest">GivePromoCodeRequest</param>
+        /// <param name="CancellationToken">cancellationToken</param>
+        /// <returns>Созданый промокод</returns>
+        /// <remarks>
+        /// Simple request:
+        /// POST
+        /// "https://localhost:9001/api/v1/PromoCodes"
+        /// GivePromoCodeRequest
+        /// {
+        ///  "code": "string",
+        ///  "serviceInfo": "string",
+        ///  "beginDate": "2024-07-15T01:46:57.847Z",
+        ///  "endDate": "2024-07-15T01:46:57.847Z",
+        ///  "partnerName": "string",
+        ///  "preferenceId": "string",
+        ///  "partnerManagerId": "string"
+        /// }
+        /// </remarks>
+        /// <response code="200">Получили клиента</response>
         [HttpPost]
         public async Task<IActionResult> GivePromoCodesToCustomersWithPreferenceAsync(GivePromoCodeRequest request, CancellationToken cancellationToken)
         {
@@ -105,10 +140,6 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
             var preferenceDto = await _preferenceService.GetByIdAsync(promoCodeResponceDto.PreferenceId, cancellationToken);
             promoCodeResponce.Preference = _mapper.Map<PreferenceDto, PreferenceResponse>(preferenceDto);
 
-
-
-            //TODO: Создать промокод и выдать его клиентам с указанным предпочтением
-            //throw new NotImplementedException();
             return Ok(promoCodeResponce);
         }
     }

@@ -46,7 +46,8 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost
                  .AddScoped<IRepository<Customer>, CustomerRepository>()
                  .AddScoped<IRepository<Preference>, PreferenceRepository>()
                  .AddScoped<IRepository<CustomerPreference>, CustomerPreferenceRepository>()
-                 .AddScoped<IRepository<PromoCode>, PromoCodeRepository>(); 
+                 .AddScoped<IRepository<PromoCode>, PromoCodeRepository>()
+                 .AddScoped<IRepository<CustomerPromoCode>, CustomerPromoCodeRepository>();
 
             //.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             return serviceCollection;

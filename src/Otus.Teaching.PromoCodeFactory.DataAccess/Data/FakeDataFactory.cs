@@ -178,6 +178,7 @@ namespace Otus.Teaching.PromoCodeFactory.DataAccess.Data
                         {
                             new CustomerPromoCode()
                             {
+                                Id = Guid.NewGuid(),
                                 CustomerId = customerId,
                                 PromoCodeId = Guid.Parse("A1bc5299-92d7-459f-896e-078ed53ea99b")
                             }

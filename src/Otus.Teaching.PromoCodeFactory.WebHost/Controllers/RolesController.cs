@@ -36,40 +36,17 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
         }
 
         /// <summary>
-        /// Создать роль
+        /// Получить список ролей
         /// </summary>
-        /// <returns></returns>
-        [HttpPost("{newName}/{newDescription}")]
-        public async Task<ActionResult<string>> CreateRoleAsync(string newName, string newDescription, CancellationToken cancellationToken)
-           {
-            var creatingRoleDto = new CreatingRoleDto
-            {
-                Name = newName,
-                Description = newDescription,
-            };
-                
-            var roleDto = await _roleService.CreateAsync(creatingRoleDto, cancellationToken);
-            var roleModel = _mapper.Map<RoleDto, RoleModel>(roleDto);
-
-            //      var employee = new Employee { Id = Guid.NewGuid(), 
-            //                                   FirstName = newName,
-            //                                   LastName = newLastName,
-            //                                   Email = newEmail,
-            //                                    Roles = newRoles,
-            //          AppliedPromocodesCount = AppliedPromocodesCount
-            //       };
-
-            // var ret = await _employeeRepository.CreateAsync(employee);
-            // if (!ret.Equals("") { }
-
-            return Ok(roleModel); 
-           }
-
-        /// <summary>
-        /// Получить все доступные роли сотрудников
-        /// </summary>
-        /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns></returns>
+        /// <param name="СancellationToken">сancellationToken</param>
+        /// <returns>Список ролей</returns>
+        /// <remarks>
+        /// Simple request:
+        ///
+        /// "https://localhost:9001/api/v1/Roles"
+        ///
+        /// </remarks>
+        /// <response code="200">Получили список ролей</response>
         [HttpGet]
         public async Task<List<RoleModel>> GetRolesAsync(CancellationToken cancellationToken)
         {
@@ -82,11 +59,18 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
         }
 
         /// <summary>
-        /// Получить данные роли по Id
+        /// Получить роль по идентификатору id
         /// </summary>
-        /// <param name="id">Id роли</param>
-        /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns></returns>
+        /// <param name="id">Идентификатор</param>
+        /// <param name="CancellationToken">cancellationToken</param>
+        /// <returns>Роль</returns>
+        /// <remarks>
+        /// Simple request:
+        ///
+        /// "https://localhost:9001/api/v1/Roles/id"
+        ///
+        /// </remarks>
+        /// <response code="200">Получили роль</response>
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
@@ -95,6 +79,47 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
             return Ok(roleShortResponse);
         }
 
+        /// <summary>
+        /// Создать новую роль
+        /// </summary>
+        /// <param name="newName">Фамилия</param>
+        /// <param name="newDescription">Имя</param>
+        /// <param name="CancellationToken">cancellationToken</param>
+        /// <returns>Созданая роль</returns>
+        /// <remarks>
+        /// Simple request:
+        /// POST
+        /// "https://localhost:9001/api/v1/Roles/Name/Description"
+        /// </remarks>
+        /// <response code="200">Получили роль</response>
+        [HttpPost("{newName}/{newDescription}")]
+        public async Task<ActionResult<string>> CreateRoleAsync(string newName, string newDescription, CancellationToken cancellationToken)
+           {
+            var creatingRoleDto = new CreatingRoleDto
+            {
+                Name = newName,
+                Description = newDescription,
+            };
+                
+            var roleDto = await _roleService.CreateAsync(creatingRoleDto, cancellationToken);
+            var roleModel = _mapper.Map<RoleDto, RoleModel>(roleDto);
+            return Ok(roleModel); 
+           }
+
+        /// <summary>
+        /// Обновление данных роли
+        /// </summary>
+        /// <param name="roleid">Идентификатор</param>
+        /// <param name="Name">Имя</param>
+        /// <param name="Description">Описание</param>
+        /// <param name="CancellationToken">cancellationToken</param>
+        /// <returns>Обновленная роль</returns>
+        /// <remarks>
+        /// Simple request:
+        /// UPDATE
+        /// "https://localhost:9001/api/v1/Roles/Id/Name/Description"
+        /// </remarks>
+        /// <response code="200">Получили обновленного клиента</response>
         [HttpPut("{roleid}/{newName}/{newDescription}")]
         public async Task<ActionResult<string>> UpdateRoleAsync(Guid roleid, string newName, string newDescription, CancellationToken cancellationToken)
            {
@@ -108,38 +133,24 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
 
             if (roleDto == null) 
                  return NotFound();
-        //     employee.FirstName = newName;
-        //     employee.LastName = newLastName;
-        //     employee.Email = newEmail;
-        //      employee.Roles = new List<Role>(newRoles);
-        //      employee.AppliedPromocodesCount = AppliedPromocodesCount;
-
-        //     var ret = _employeeRepository.UpdateAsync(employee);
-        //     if (ret.Equals("OK"))
+ 
             return Ok(_mapper.Map<RoleDto, RoleModel>(roleDto));
-
-            //      return BadRequest();
-
-            
-
-            //      var employee = new Employee { Id = Guid.NewGuid(), 
-            //                                   FirstName = newName,
-            //                                   LastName = newLastName,
-            //                                   Email = newEmail,
-            //                                    Roles = newRoles,
-            //          AppliedPromocodesCount = AppliedPromocodesCount
-            //       };
-
-            // var ret = await _employeeRepository.CreateAsync(employee);
-            // if (!ret.Equals("") { }
         }
 
         /// <summary>
-        /// Удалить роль по Id
-        /// <param name="Guid">Cancellation token</param>
-        /// <param name="cancellationToken">Cancellation token</param>
+        /// Удалить роль по идентификатору id
         /// </summary>
-        /// <returns></returns>
+        /// <param name="id">Идентификатор</param>
+        /// <param name="CancellationToken">cancellationToken</param>
+        /// <returns>Роль</returns>
+        /// <remarks>
+        /// Simple request:
+        /// DELETE
+        ///
+        /// "https://localhost:9001/api/v1/Roles/id"
+        ///
+        /// </remarks>
+        /// <response code="200">Роль удалена</response>
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<string>> DeleteRoleByIdAsync(Guid id, CancellationToken cancellationToken)
            {
@@ -152,27 +163,6 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
                 AnswerStatus.NotFound => NotFound(answer.text),
                 _ => BadRequest("Неизвестная ошибка")
             };
-
-
-
-            
-        //      var employee = await _employeeRepository.GetByIdAsync(id);
-
-        //       if (employee == null)
-        //         return NotFound();
-
-
-        //     var ret = await _employeeRepository.DelByIdAsync(id);
-        //    if (ret.Equals("OK"))
-        //        return Ok();
-
-        //     return BadRequest();
-           }
-
-        /// <summary>
-        /// Обновить данные сотрудника по Id
-        /// </summary>
-        /// <returns></returns>
-
+        }
     }
 }

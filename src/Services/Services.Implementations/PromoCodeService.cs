@@ -66,7 +66,8 @@ namespace Services.Implementations
         public async Task<PromoCodeResponceDto> CreatePromoCodeAsync(GivePromoCodeRequestDto givePromoCodeRequestDto, CancellationToken cancellationToken)
         {
             bool addPromoCodeFlag = false;
-            
+            PromoCode promoCode = new PromoCode();
+
             var customersAll = await _customerRepository.GetAllAsync(cancellationToken, false);
             var promoCodeResponceDto = new PromoCodeResponceDto()
             {
@@ -81,23 +82,23 @@ namespace Services.Implementations
             {
               if(customer.Preferences.Where(x => x.PreferenceId == givePromoCodeRequestDto.PreferenceId).ToList().Count > 0)
                 {
+                    if (!addPromoCodeFlag)
+                    {
+                        addPromoCodeFlag = true;
+                        promoCode = _mapper.Map<PromoCode>(givePromoCodeRequestDto);
+                        _promocodeRepository.AddAsync(promoCode, cancellationToken);
+                    }
+
                     var customerPromoCode = new CustomerPromoCode()
                     {
                         Id = Guid.NewGuid(),
                         CustomerId = customer.Id,
                         PromoCodeId = givePromoCodeRequestDto.Id
                     }; 
-
-                   await _customerPromoCodeRepository.AddAsync(customerPromoCode, cancellationToken);
-                   if(!addPromoCodeFlag) addPromoCodeFlag = true;
+                    var customerPC = await _customerPromoCodeRepository.AddAsync(customerPromoCode, cancellationToken);
                 }
             }
 
-            if(!addPromoCodeFlag) return promoCodeResponceDto;
-
-            var promoCode = _mapper.Map<PromoCode>(givePromoCodeRequestDto);
-
-            _promocodeRepository.AddAsync(promoCode, cancellationToken);
 
             return _mapper.Map<PromoCode, PromoCodeResponceDto>(promoCode);
         }

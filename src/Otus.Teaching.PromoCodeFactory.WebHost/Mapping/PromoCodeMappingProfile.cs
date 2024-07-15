@@ -24,8 +24,10 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Mapping
             CreateMap<GivePromoCodeRequest, GivePromoCodeRequestDto>()
                 .ForMember(d => d.Id, s => s.MapFrom(s => Guid.NewGuid()));
             CreateMap<GivePromoCodeRequestDto, PromoCode>()
-                .ForMember(d => d.CustomerId,s => s.Ignore());
-
+                .ForMember(d => d.PartnerManager, s => s.Ignore())
+                .ForMember(d => d.Preference, s => s.Ignore())
+                .ForMember(d => d.Customer, s => s.Ignore())
+                .ForMember(d => d.CustomerId, s => s.Ignore());
         }
     }
 }

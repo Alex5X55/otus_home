@@ -40,6 +40,10 @@ namespace Infrastructure.EntityFramework
         /// </summary>
         public DbSet<CustomerPreference> CustomerPreferences { get; set; }
 
+        /// <summary>
+        /// Предпочтения.
+        /// </summary>
+        public DbSet<CustomerPromoCode> CustomerPromoCode { get; set; }
 
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)

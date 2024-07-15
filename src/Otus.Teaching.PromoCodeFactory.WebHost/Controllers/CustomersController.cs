@@ -46,6 +46,19 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
             _logger = logger;
         }
 
+
+        /// <summary>
+        /// Получить список клиентов
+        /// </summary>
+        /// <param name="СancellationToken">сancellationToken</param>
+        /// <returns>Список клиентов</returns>
+        /// <remarks>
+        /// Simple request:
+        ///
+        /// "https://localhost:9001/api/v1/Customers"
+        ///
+        /// </remarks>
+        /// <response code="200">Получили список клиентов</response>
         [HttpGet]
         public async Task<List<CustomerShortResponse>> GetCustomersAsync(CancellationToken cancellationToken)
         {
@@ -57,6 +70,19 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
             return custimersList;
         }
 
+        /// <summary>
+        /// Получить клиента по идентификатору id
+        /// </summary>
+        /// <param name="id">Идентификатор</param>
+        /// <param name="CancellationToken">cancellationToken</param>
+        /// <returns>Клиент</returns>
+        /// <remarks>
+        /// Simple request:
+        ///
+        /// "https://localhost:9001/api/v1/Customers/id"
+        ///
+        /// </remarks>
+        /// <response code="200">Получили клиента</response>
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
@@ -77,6 +103,27 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
             return Ok(customerResponse);
         }
 
+        /// <summary>
+        /// Создать нового клиента
+        /// </summary>
+        /// <param name="newFirstName">Фамилия</param>
+        /// <param name="newLastName">Имя</param>
+        /// <param name="newEmail">Электронная почта</param>
+        /// <param name="PreferenceId">Массив предпочтений</param>
+        /// <param name="CancellationToken">cancellationToken</param>
+        /// <returns>Созданый клиент</returns>
+        /// <remarks>
+        /// Simple request:
+        /// POST
+        /// "https://localhost:9001/api/v1/Customers/FirstName/LastName/Email"
+        /// Preferences massiv
+        /// [
+        ///  "preferenceId",
+        ///  "preferenceId2",
+        ///  "preferenceId3"
+        /// ]
+        /// </remarks>
+        /// <response code="200">Получили клиента</response>
         [HttpPost("{newFirstName}/{newLastName}/{newEmail}")]
         public async Task<ActionResult<string>> CreateCustomerAsync(string newFirstName, string newLastName, string newEmail, Guid[] PreferenceId, CancellationToken cancellationToken)
         {
@@ -87,7 +134,6 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
                 Email = newEmail,
                 PreferenceIds = new List<Guid>(PreferenceId)
             };
-            //TODO: Добавить создание нового клиента вместе с его предпочтениями
             var customersDto = await _customerService.CreateAsync(creatingCustomerDto, cancellationToken);
             var customerResponse = new CustomerResponse(); // _mapper.Map<CustomerResponse>(customersDto);
             customerResponse.Id = customersDto.Id;
@@ -104,17 +150,36 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
                 }
                 customerResponse.Preferences = PreferenceResponses;
             }
-            
 
             if (customersDto.PromoCodes != null)
                 customerResponse.PromoCodes = customersDto.PromoCodes.Select(x =>
             _mapper.Map<PromoCodeDto, PromoCodeShortResponse>(x.PromoCode)).ToList();
-            
-            // throw new NotImplementedException();
+
             return Ok(customerResponse);
         }
 
-        
+        /// <summary>
+        /// Обновление данных клиента
+        /// </summary>
+        /// <param name="id">Идентификатор</param>
+        /// <param name="newFirstName">Фамилия</param>
+        /// <param name="newLastName">Имя</param>
+        /// <param name="newEmail">Электронная почта</param>
+        /// <param name="PreferenceId">Массив предпочтений</param>
+        /// <param name="CancellationToken">cancellationToken</param>
+        /// <returns>Обновленный клиент</returns>
+        /// <remarks>
+        /// Simple request:
+        /// UPDATE
+        /// "https://localhost:9001/api/v1/Customers/FirstName/LastName/Email"
+        /// Preferences massiv
+        /// [
+        ///  "preferenceId",
+        ///  "preferenceId2",
+        ///  "preferenceId3"
+        /// ]
+        /// </remarks>
+        /// <response code="200">Получили обновленного клиента</response>
         [HttpPut("{id:guid}/{newFirstName}/{newLastName}/{newEmail}")]
         public async Task<ActionResult<string>> UpdateCustomerAsync(Guid id, string newFirstName, string newLastName, string newEmail, Guid?[] PreferenceId, CancellationToken cancellationToken)
         {
@@ -150,11 +215,23 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
                 customerResponse.PromoCodes = customersDto.PromoCodes.Select(x =>
             _mapper.Map<PromoCodeDto, PromoCodeShortResponse>(x.PromoCode)).ToList();
 
-            //TODO: Обновить данные клиента вместе с его предпочтениями
-            //throw new NotImplementedException();
-            return Ok(customerResponse);
+             return Ok(customerResponse);
         }
 
+        /// <summary>
+        /// Удалить пользователя по идентификатору id
+        /// </summary>
+        /// <param name="id">Идентификатор</param>
+        /// <param name="CancellationToken">cancellationToken</param>
+        /// <returns>Пользователь</returns>
+        /// <remarks>
+        /// Simple request:
+        /// DELETE
+        ///
+        /// "https://localhost:9001/api/v1/Customers/id"
+        ///
+        /// </remarks>
+        /// <response code="200">Пользователь удален</response>
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<string>> DeleteByIdAsync(Guid id, CancellationToken cancellationToken)
         {
@@ -167,9 +244,6 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
                 AnswerStatus.NotFound => NotFound(answer.text),
                 _ => BadRequest("Неизвестная ошибка")
             };
-
-            //TODO: Удаление клиента вместе с выданными ему промокодами
-            //throw new NotImplementedException();
         }
     }
 }

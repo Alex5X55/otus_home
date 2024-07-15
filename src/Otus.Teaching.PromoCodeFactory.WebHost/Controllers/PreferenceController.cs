@@ -12,7 +12,7 @@ using Services.Contracts.Preference;
 namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
 {
     /// <summary>
-    /// Сотрудники
+    /// Предпочтения
     /// </summary>
     [ApiController]
     [Route("api/v1/[controller]")]
@@ -30,12 +30,18 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
             _mapper = mapper;
         }
 
-
         /// <summary>
-        /// Получить данные всех сотрудников
+        /// Получить список предпочтений
         /// </summary>
-        /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns></returns>
+        /// <param name="СancellationToken">сancellationToken</param>
+        /// <returns>Список предпочтений</returns>
+        /// <remarks>
+        /// Simple request:
+        ///
+        /// "https://localhost:9001/api/v1/Preferences"
+        ///
+        /// </remarks>
+        /// <response code="200">Получили список предпочтений</response>
         [HttpGet]
         public async Task<List<PreferenceResponse>> GetPreferencesAsync(CancellationToken cancellationToken)
         {

@@ -41,6 +41,16 @@ namespace Services.Repositories.Abstractions
         /// <returns> Cущность. </returns>
         Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
+
+        /// <summary>
+        /// Получить сущность по Id.
+        /// </summary>
+        /// <param name="id"> Id сущности. </param>
+        /// <param name="cancellationToken"></param>
+        /// <returns> Cущность. </returns>
+        Task<T> GetByIdsAsync(Guid id, Guid id2, CancellationToken cancellationToken);
+
+
         /// <summary>
         /// Удалить сущность.
         /// </summary>
