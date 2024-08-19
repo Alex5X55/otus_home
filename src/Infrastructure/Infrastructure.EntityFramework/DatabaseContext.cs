@@ -24,6 +24,15 @@ namespace Infrastructure.EntityFramework
         /// Клиенты.
         /// </summary>
         public DbSet<Customer> Customers { get; set; }
+        /// <summary>
+        /// Партнеры.
+        /// </summary>
+        public DbSet<Partner> Partners { get; set; }
+
+        /// <summary>
+        /// Лимиты.
+        /// </summary>
+        public DbSet<PartnerPromoCodeLimit> PartnerPromoCodeLimits { get; set; }
 
         /// <summary>
         /// Промокоды.
@@ -82,8 +91,11 @@ namespace Infrastructure.EntityFramework
             .ApplyConfiguration(new EmployeeConfiguration())
             .ApplyConfiguration(new CustomerConfiguration())
             .ApplyConfiguration(new PromoCodeConfiguration())
-            .ApplyConfiguration(new CustomerPreferencesConfiguration()) 
-            .ApplyConfiguration(new CustomerPromoCodeConfiguration());
+            .ApplyConfiguration(new CustomerPreferencesConfiguration())
+            .ApplyConfiguration(new CustomerPromoCodeConfiguration())
+            .ApplyConfiguration(new PartnerConfiguration())
+            .ApplyConfiguration(new PartnerPromoCodeLimitConfiguration());
+
 
             base.OnModelCreating(modelBuilder);
             }

@@ -1,5 +1,6 @@
 ﻿using Services.Contracts.Customer;
 using Services.Contracts.Emploee;
+using Services.Contracts.Partner;
 using Services.Contracts.Preference;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace Services.Contracts.PromoCode
     public class PromoCodeDto
     {
         public Guid Id { get; set; }
+
         public string Code { get; set; }
 
         public string ServiceInfo { get; set; }
@@ -20,7 +22,9 @@ namespace Services.Contracts.PromoCode
 
         public DateTime EndDate { get; set; }
 
-        public string PartnerName { get; set; }
+        public virtual PartnerDto Partner { get; set; }
+
+        public virtual Guid PartnerId { get; set; }
 
         public virtual EmployeeDto? PartnerManager { get; set; }
 

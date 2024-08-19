@@ -15,6 +15,7 @@ using Otus.Teaching.PromoCodeFactory.WebHost.Models.Customer;
 using Otus.Teaching.PromoCodeFactory.WebHost.Models.Preference;
 using Services.Contracts.Customer;
 using Services.Contracts.Preference;
+using Services.Implementations.Exceptions.Partner;
 
 namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
 {
@@ -89,7 +90,7 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
                 ServiceInfo = promoCodeResponceDto.ServiceInfo,
                 BeginDate = promoCodeResponceDto.BeginDate,
                 EndDate = promoCodeResponceDto.EndDate,
-                PartnerName = promoCodeResponceDto.PartnerName,
+                PartnerId = promoCodeResponceDto.PartnerId,
                 PartnerManagerId = promoCodeResponceDto.PartnerManagerId
             };
 
@@ -125,22 +126,32 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
         [HttpPost]
         public async Task<IActionResult> GivePromoCodesToCustomersWithPreferenceAsync(GivePromoCodeRequest request, CancellationToken cancellationToken)
         {
-            var promoCodeResponceDto = await _promocodeService.CreatePromoCodeAsync(_mapper.Map<GivePromoCodeRequestDto>(request), cancellationToken);
-            var promoCodeResponce = new PromoCodeResponce()
+            try
             {
-                Id = promoCodeResponceDto.Id,
-                Code = promoCodeResponceDto.Code,
-                ServiceInfo = promoCodeResponceDto.ServiceInfo,
-                BeginDate = promoCodeResponceDto.BeginDate,
-                EndDate = promoCodeResponceDto.EndDate,
-                PartnerName = promoCodeResponceDto.PartnerName,
-                PartnerManagerId = promoCodeResponceDto.PartnerManagerId
-            };
+                var promoCodeResponceDto = await _promocodeService.CreatePromoCodeAsync(_mapper.Map<GivePromoCodeRequestDto>(request), cancellationToken);
+                var promoCodeResponce = new PromoCodeResponce()
+                {
+                    Id = promoCodeResponceDto.Id,
+                    Code = promoCodeResponceDto.Code,
+                    ServiceInfo = promoCodeResponceDto.ServiceInfo,
+                    BeginDate = promoCodeResponceDto.BeginDate,
+                    EndDate = promoCodeResponceDto.EndDate,
+                    PartnerId = promoCodeResponceDto.PartnerId,
+                    PartnerManagerId = promoCodeResponceDto.PartnerManagerId
+                };
 
-            var preferenceDto = await _preferenceService.GetByIdAsync(promoCodeResponceDto.PreferenceId, cancellationToken);
-            promoCodeResponce.Preference = _mapper.Map<PreferenceDto, PreferenceResponse>(preferenceDto);
-
-            return Ok(promoCodeResponce);
+                var preferenceDto = await _preferenceService.GetByIdAsync(promoCodeResponceDto.PreferenceId, cancellationToken);
+                promoCodeResponce.Preference = _mapper.Map<PreferenceDto, PreferenceResponse>(preferenceDto);
+                return Ok(promoCodeResponce);
+            }
+            catch (PartnerNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (PartnerLimitWasEndedException ex)
+            {
+                return BadRequest(ex.Message); 
+            }
         }
     }
 }

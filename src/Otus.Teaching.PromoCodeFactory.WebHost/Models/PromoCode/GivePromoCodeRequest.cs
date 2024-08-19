@@ -12,7 +12,7 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Models.PromoCode
 
         public DateTime EndDate { get; set; }
 
-        public string PartnerName { get; set; }
+        public Guid PartnerId { get; set; }
 
         public Guid? PreferenceId { get; set; }
 

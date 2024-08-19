@@ -102,8 +102,8 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost
                 cfg.AddProfile<PromoCodeMappingProfile>();
                 cfg.AddProfile<CustomerPreferenceMappingProfile>();
                 cfg.AddProfile<CustomerPromoCodeMappingProfile>();
-                // cfg.AddProfile<EmploeeMappingsProfile>();
-                //   cfg.AddProfile<Services.Implementations.Mapping.LessonMappingsProfile>();
+                cfg.AddProfile<PartnerMappingProfile>();
+                cfg.AddProfile<PartnerPromoCodeLimitMappingProfile>();
             });
             configuration.AssertConfigurationIsValid();
             return configuration;

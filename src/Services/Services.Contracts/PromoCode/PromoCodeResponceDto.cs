@@ -19,7 +19,7 @@ namespace Services.Contracts.PromoCode
 
         public string? EndDate { get; set; }
 
-        public string PartnerName { get; set; }
+        public Guid PartnerId { get; set; }
 
         public PreferenceDto Preference { get; set; }
         

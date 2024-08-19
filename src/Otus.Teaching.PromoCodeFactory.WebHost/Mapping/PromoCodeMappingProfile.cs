@@ -27,7 +27,8 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Mapping
                 .ForMember(d => d.PartnerManager, s => s.Ignore())
                 .ForMember(d => d.Preference, s => s.Ignore())
                 .ForMember(d => d.Customer, s => s.Ignore())
-                .ForMember(d => d.CustomerId, s => s.Ignore());
+                .ForMember(d => d.CustomerId, s => s.Ignore())
+                .ForMember(d => d.Partner, s => s.Ignore());
         }
     }
 }

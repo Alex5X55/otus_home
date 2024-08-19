@@ -146,6 +146,17 @@ namespace Infrastructure.Repositories.Implementations
             return entity;
         }
 
+        /// <summary>
+        /// Для сущности проставить состояние - что она изменена.
+        /// </summary>
+        /// <param name="entity"> Сущность для изменения. </param>
+        public virtual async Task<T> UpdateCancelAsync(T entity, CancellationToken cancellationToken)
+        {
+            Context.Entry(entity).State = EntityState.Modified;
+            await _entitySet.ExecuteUpdateAsync<T>(e => e.SetProperty(a => a.Id, a => a.Id));
+            return entity;
+        }
+
         #endregion
 
         #region Delete

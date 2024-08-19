@@ -119,7 +119,7 @@ namespace Otus.Teaching.PromoCodeFactory.DataAccess.Data
                 ServiceInfo = "Сервис инфо 1",
                 BeginDate = DateTime.Now,
                 EndDate = DateTime.Now.AddDays(5),
-                PartnerName = "Партнер1",
+                //PartnerId = 
                 PartnerManagerId = Employees.Where(x => x.Id == Guid.Parse("f766e2bf-340a-46ea-bff3-f1700b435895")).SingleOrDefault().Id,
                 PreferenceId = Preferences.Where(x => x.Name == "Театр").SingleOrDefault().Id,
                 CustomerId = Customers.Where(x => x.Id == Guid.Parse("6c8c6b1a-4349-45b0-ab31-244740aaf0f0")).SingleOrDefault().Id,
@@ -131,7 +131,7 @@ namespace Otus.Teaching.PromoCodeFactory.DataAccess.Data
                 ServiceInfo = "Сервис инфо 2",
                 BeginDate = DateTime.Now,
                 EndDate = DateTime.Now.AddMonths(1),
-                PartnerName = "Партнер2",
+                //PartnerName = "Партнер2",
                 PartnerManagerId = Employees.Where(x => x.Id == Guid.Parse("f766e2bf-340a-46ea-bff3-f1700b435895")).SingleOrDefault().Id,
                 PreferenceId = Preferences.Where(x => x.Name == "Семья").SingleOrDefault().Id,
                 CustomerId = Customers.Where(x => x.Id == Guid.Parse("bc8c6b1a-4349-45b0-ab31-244740aaf0f1")).SingleOrDefault().Id,

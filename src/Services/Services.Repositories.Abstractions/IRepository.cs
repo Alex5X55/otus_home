@@ -78,6 +78,14 @@ namespace Services.Repositories.Abstractions
         /// <param name="entity"> Сущность для изменения. </param>
         //void Update(T entity);
         Task<T> UpdateAsync(T entity, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Для сущности проставить состояние - что она изменена.
+        /// </summary>
+        /// <param name="entity"> Сущность для изменения. </param>
+        //void Update(T entity);
+        Task<T> UpdateCancelAsync(T entity, CancellationToken cancellationToken);
+
         /// <summary>
         /// Добавить в базу одну сущность.
         /// </summary>

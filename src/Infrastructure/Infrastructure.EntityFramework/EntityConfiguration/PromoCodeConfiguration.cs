@@ -28,11 +28,14 @@ namespace Infrastructure.EntityFramework.EntityConfiguration
                 .HasOne(promoCode => promoCode.Customer)
                 .WithMany()
                 .HasForeignKey(promoCode => promoCode.CustomerId);
-
+            builder
+                .HasOne(promoCode => promoCode.Partner)
+                .WithMany()
+                .HasForeignKey(promoCode => promoCode.PartnerId);
 
             builder.Property(promoCode => promoCode.Code).HasMaxLength(50).IsRequired();
             builder.Property(promoCode => promoCode.ServiceInfo).HasMaxLength(100).IsRequired();
-            builder.Property(promoCode => promoCode.PartnerName).HasMaxLength(50).IsRequired();
+            
 
         }
     }

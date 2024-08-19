@@ -17,7 +17,7 @@ namespace Services.Contracts.PromoCode
 
         public DateTime EndDate { get; set; }
 
-        public string PartnerName { get; set; }
+        public Guid PartnerId { get; set; }
 
         public Guid? PartnerManagerId { get; set; }
 

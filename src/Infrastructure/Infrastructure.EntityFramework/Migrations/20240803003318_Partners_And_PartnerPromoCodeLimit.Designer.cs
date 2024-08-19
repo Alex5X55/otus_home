@@ -3,6 +3,7 @@ using System;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.EntityFramework.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240803003318_Partners_And_PartnerPromoCodeLimit")]
+    partial class Partners_And_PartnerPromoCodeLimit
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -173,6 +176,8 @@ namespace Infrastructure.EntityFramework.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasAlternateKey("Name");
+
                     b.HasIndex("Name")
                         .IsUnique();
 
@@ -200,9 +205,14 @@ namespace Infrastructure.EntityFramework.Migrations
                     b.Property<Guid>("PartnerId")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid?>("PartnerId1")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PartnerId");
+
+                    b.HasIndex("PartnerId1");
 
                     b.ToTable("PartnerPromoCodeLimits");
                 });
@@ -245,10 +255,12 @@ namespace Infrastructure.EntityFramework.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("PartnerId")
+                    b.Property<Guid?>("PartnerManagerId")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("PartnerManagerId")
+                    b.Property<string>("PartnerName")
+                        .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<Guid?>("PreferenceId")
@@ -262,8 +274,6 @@ namespace Infrastructure.EntityFramework.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
-
-                    b.HasIndex("PartnerId");
 
                     b.HasIndex("PartnerManagerId");
 
@@ -322,10 +332,14 @@ namespace Infrastructure.EntityFramework.Migrations
             modelBuilder.Entity("Otus.Teaching.PromoCodeFactory.Core.Domain.PromoCodeManagement.PartnerPromoCodeLimit", b =>
                 {
                     b.HasOne("Otus.Teaching.PromoCodeFactory.Core.Domain.PromoCodeManagement.Partner", "Partner")
-                        .WithMany("PartnerLimits")
+                        .WithMany()
                         .HasForeignKey("PartnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Otus.Teaching.PromoCodeFactory.Core.Domain.PromoCodeManagement.Partner", null)
+                        .WithMany("PartnerLimits")
+                        .HasForeignKey("PartnerId1");
 
                     b.Navigation("Partner");
                 });
@@ -336,10 +350,6 @@ namespace Infrastructure.EntityFramework.Migrations
                         .WithMany()
                         .HasForeignKey("CustomerId");
 
-                    b.HasOne("Otus.Teaching.PromoCodeFactory.Core.Domain.PromoCodeManagement.Partner", "Partner")
-                        .WithMany()
-                        .HasForeignKey("PartnerId");
-
                     b.HasOne("Otus.Teaching.PromoCodeFactory.Core.Domain.Administration.Employee", "PartnerManager")
                         .WithMany()
                         .HasForeignKey("PartnerManagerId");
@@ -349,8 +359,6 @@ namespace Infrastructure.EntityFramework.Migrations
                         .HasForeignKey("PreferenceId");
 
                     b.Navigation("Customer");
-
-                    b.Navigation("Partner");
 
                     b.Navigation("PartnerManager");
 
