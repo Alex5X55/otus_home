@@ -19,6 +19,7 @@ using Services.Implementations;
 using Otus.Teaching.PromoCodeFactory.WebHost.Models;
 using Services.Contracts.Partner;
 using Services.Implementations.Exceptions.Partner;
+using Otus.Teaching.PromoCodeFactory.WebHost.PromoCodeStatusCodeResults;
 
 namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
 {
@@ -114,7 +115,7 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
             }
             catch(PartnerLimitIsEmptyException ex)
             {
-                return BadRequest(ex.Message);
+                return new PartnerLimitIsEmptyObjectResult(ex.Message);
             }
         }
 
