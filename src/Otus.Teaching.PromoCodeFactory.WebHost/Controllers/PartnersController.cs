@@ -102,7 +102,9 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
                     Limit = setPartnerPromoCodeLimitRequest.Limit
                 };
                 var partnerPromoCodeLimitResponseDto = await _partnerService.SetPartnerPromoCodeLimitAsync(setPartnerPromoCodeLimitRequestDto, cancellationToken);
+                
                 var partnerPromoCodeLimitResponse = _mapper.Map<PartnerPromoCodeLimitResponse>(partnerPromoCodeLimitResponseDto);
+                
                 return Ok(partnerPromoCodeLimitResponse);
             }
             catch (PartnerNotFoundException ex)
