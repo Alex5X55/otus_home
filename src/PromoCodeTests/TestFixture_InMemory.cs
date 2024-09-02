@@ -22,8 +22,8 @@ namespace PromoCodeTests
             var builder = new ConfigurationBuilder();
             var configuration = builder.Build();
             ServiceCollection = DependencyInjection.AddServices((IServiceCollection)null, configuration, DIResource.Testing_IOC);
-            ServiceProvider = GetServiceProvider();
-           // ServiceProvider = serviceProvider;
+            var serviceProvider = GetServiceProvider();
+            ServiceProvider = serviceProvider;
         }
 
         private IServiceProvider GetServiceProvider()

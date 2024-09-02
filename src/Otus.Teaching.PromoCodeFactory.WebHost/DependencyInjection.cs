@@ -110,11 +110,13 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost
         {
             var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkInMemoryDatabase()
+                .AddEntityFrameworkProxies()
                 .BuildServiceProvider();
             serviceCollection.AddDbContext<DatabaseContext>(options =>
             {
                 options.UseInMemoryDatabase("InMemoryDb", builder => { });
                 options.UseInternalServiceProvider(serviceProvider);
+                options.UseLazyLoadingProxies();
             });
             serviceCollection.AddTransient<DbContext, DatabaseContext>();
             return serviceCollection;
