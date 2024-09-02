@@ -98,6 +98,7 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost.Controllers
                 var setPartnerPromoCodeLimitRequestDto = new SetPartnerPromoCodeLimitRequestDto
                 {
                     PartnerId = id,
+
                     EndDate = setPartnerPromoCodeLimitRequest.EndDate,
                     Limit = setPartnerPromoCodeLimitRequest.Limit
                 };
