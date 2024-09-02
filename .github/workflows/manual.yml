@@ -1,0 +1,31 @@
+name: dotnet pdd
+
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  TEST_PROJ: 'src/PromoCodeTests'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 3.1.x
+      
+    - name: Install dependencies, build and test
+      working-directory: ${{ env.TEST_PROJ }}
+      run: |
+        dotnet restore
+        dotnet build
+        dotnet test
