@@ -1,4 +1,4 @@
-name: dotnet pdd
+name: dotnet pdd1
 
 on: 
   push:
