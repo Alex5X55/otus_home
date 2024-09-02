@@ -70,7 +70,7 @@ namespace PromoCodeWebApiTest
                 .WithId(partnerPromoCodeLimitResponseDto.Id)
                 .WithPartnerId(partnerPromoCodeLimitResponseDto.PartnerId)
                 .WithCreateDate(partnerPromoCodeLimitResponseDto.CreateDate)
-                .WithCancelDate(partnerPromoCodeLimitResponseDto.CancelDate ?? DateTime.Now)
+                .WithCancelDate(partnerPromoCodeLimitResponseDto.CancelDate ?? DateTime.MaxValue)
                 .WithEndDate(partnerPromoCodeLimitResponseDto.EndDate)
                 .WithLimit(setPartnerPromoCodeLimitRequest.Limit)
                 .Build();

@@ -17,14 +17,14 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            using (var scope = host.Services.CreateScope())
-            {
-                var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
-                //Migrate(); 
-                db.Initialize();
-                //db.Database.EnsureDeleted();
-                //db.Database.EnsureCreated();
-            }
+           // using (var scope = host.Services.CreateScope())
+          //  {
+            //    var db = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+               //////Migrate(); 
+                //db.Initialize();
+               //// //db.Database.EnsureDeleted();
+               /// //db.Database.EnsureCreated();
+          ///  }
             host.Run();
         }
 
@@ -33,9 +33,9 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost
                 .ConfigureWebHostDefaults(webBuilder => 
                 { 
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
-                    {
-                    });
+                   // webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
+                   // {
+                   // });
                 });
     }
 }

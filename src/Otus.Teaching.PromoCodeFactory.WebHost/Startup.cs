@@ -27,8 +27,8 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost
         public void ConfigureServices(IServiceCollection services)
         {
             //Services.AddSingleton(FakeDataFactory.Employees());
-            SetAutomapper(services);
-            services.AddServices(Configuration);
+            //SetAutomapper(services);
+            services.AddServices(Configuration, DIResource.Working_IOC);
 
 
 
@@ -54,6 +54,10 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost
                 options.Title = "PromoCode Factory API Doc";
                 options.Version = "1.0";
             });
+
+
+
+
 
         }
 
@@ -85,7 +89,7 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost
             });
         }
 
-        private static IServiceCollection SetAutomapper(IServiceCollection services)
+       /* private static IServiceCollection SetAutomapper(IServiceCollection services)
         {
             services.AddSingleton<IMapper>(new Mapper(GetMapperConfiguration()));
             return services;
@@ -108,5 +112,6 @@ namespace Otus.Teaching.PromoCodeFactory.WebHost
             configuration.AssertConfigurationIsValid();
             return configuration;
         }
+       */
     }
 }

@@ -2,68 +2,69 @@
 using Services.Contracts.Partner;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PromoCodeTests
+namespace PromoCodeWebApiTest
 {
-    public class PartnerPromoCodeLimitResponseDtoBuilder
+    public class PartnerPromoCodeLimitResponseBuilder
     {
 
         private Guid _id;
         private Guid _partnerId;
-        private DateTime _createDate;
-        private DateTime? _cancelDate;
-        private DateTime _endDate;
+        private string _createDate;
+        private string _cancelDate;
+        private string _endDate;
         private int _limit;
 
 
-        public PartnerPromoCodeLimitResponseDtoBuilder()
+        public PartnerPromoCodeLimitResponseBuilder()
         {
         }
 
-        public PartnerPromoCodeLimitResponseDtoBuilder WithId(Guid id)
+        public PartnerPromoCodeLimitResponseBuilder WithId(Guid id)
         {
             _id = id;
             return this;
         }
 
-        public PartnerPromoCodeLimitResponseDtoBuilder WithPartnerId(Guid partnerId)
+        public PartnerPromoCodeLimitResponseBuilder WithPartnerId(Guid partnerId)
         {
             _partnerId = partnerId;
             return this;
         }
 
-        public PartnerPromoCodeLimitResponseDtoBuilder WithCreateDate(DateTime createDate)
+        public PartnerPromoCodeLimitResponseBuilder WithCreateDate(DateTime createDate)
         {
-            _createDate = createDate;
+            _createDate = createDate.ToString(CultureInfo.CurrentCulture);
             return this;
         }
 
-        public PartnerPromoCodeLimitResponseDtoBuilder WithCancelDate(DateTime cancelDate)
+        public PartnerPromoCodeLimitResponseBuilder WithCancelDate(DateTime cancelDate)
         {
-            _cancelDate = cancelDate;
+            _cancelDate = cancelDate.ToString(CultureInfo.CurrentCulture);
             return this;
         }
 
-        public PartnerPromoCodeLimitResponseDtoBuilder WithEndDate(DateTime endDate)
+        public PartnerPromoCodeLimitResponseBuilder WithEndDate(DateTime endDate)
         {
-            _endDate = endDate;
+            _endDate = endDate.ToString(CultureInfo.CurrentCulture);
             return this;
         }
 
-        public PartnerPromoCodeLimitResponseDtoBuilder WithLimit(int limit)
+        public PartnerPromoCodeLimitResponseBuilder WithLimit(int limit)
         {
             _limit = limit;
             return this;
         }
 
 
-        public PartnerPromoCodeLimitResponseDto Build()
+        public PartnerPromoCodeLimitResponse Build()
         {
-            return new PartnerPromoCodeLimitResponseDto()
+            return new PartnerPromoCodeLimitResponse()
             {
                  Id =_id,
                  PartnerId = _partnerId,

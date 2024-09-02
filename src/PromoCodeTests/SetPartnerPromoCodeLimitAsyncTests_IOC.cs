@@ -15,12 +15,14 @@ using Serilog;
 using Services.Contracts.Partner;
 using System.Xml.Linq;
 using Services.Implementations.Exceptions.Partner;
-
-
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Otus.Teaching.PromoCodeFactory.WebHost;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities.Resources;
 
 namespace PromoCodeTests
 {
-    public class SetPartnerPromoCodeLimitAsyncTests
+    public class SetPartnerPromoCodeLimitAsyncTests_IOC: IDisposable
     {
         private IPartnerService _partnerService;
         
@@ -30,13 +32,18 @@ namespace PromoCodeTests
         private Mock<IRepository<PartnerPromoCodeLimit>> _partnerPromoCodeLimitRepositoryMock
             = new Mock<IRepository<PartnerPromoCodeLimit>> ();
 
-        private Mock<IMapper> _mapperMock
-            = new Mock<IMapper>();
 
-        public SetPartnerPromoCodeLimitAsyncTests()
+
+        public SetPartnerPromoCodeLimitAsyncTests_IOC()
         {
+            var builder = new ConfigurationBuilder();
+            var configuration = builder.Build();
+            var serviceCollection = DependencyInjection.AddServices((IServiceCollection)null, configuration, DIResource.Testing_IOC);
+            var serviceProvider = serviceCollection
+                .BuildServiceProvider();
+
             _partnerService = new PartnerService(
-                  _mapperMock.Object,
+                  serviceProvider.GetService<IMapper>(),
                   _partnerRepositoryMock.Object,
                   _partnerPromoCodeLimitRepositoryMock.Object
                 );
@@ -44,7 +51,7 @@ namespace PromoCodeTests
 
 
         [Fact]
-        public async Task SetPartnerPromoCodeLimitAsync_Returns_Success_For_Valid_Data()
+        public async Task SetPartnerPromoCodeLimitAsync_IOC_Returns_Success_For_Valid_Data()
         {
             //Arrange
             var cancellationToken = new CancellationTokenSource().Token;
@@ -114,10 +121,6 @@ namespace PromoCodeTests
             _partnerPromoCodeLimitRepositoryMock.Setup(m =>
                 m.GetByIdAsync(newLimit.Id, cancellationToken)).ReturnsAsync(newLimit);
 
-            _mapperMock.Setup(m =>
-                m.Map<PartnerPromoCodeLimitResponseDto>(newLimit)).Returns(partnerPromoCodeLimitResponseDto);
-
-
             await _partnerService.SetPartnerPromoCodeLimitAsync(setPartnerPromoCodeLimitRequestDto, cancellationToken);
 
             //Act
@@ -129,7 +132,7 @@ namespace PromoCodeTests
 
 
         [Fact]
-        public async Task SetPartnerPromoCodeLimit_Pantner_Not_Found_Successfull()
+        public async Task SetPartnerPromoCodeLimitAsync_IOC_Pantner_Not_Found_Successfull()
         {
             //Arrange
             var cancellationToken = new CancellationTokenSource().Token;
@@ -150,7 +153,7 @@ namespace PromoCodeTests
         }
 
         [Fact]
-        public async Task SetPartnerPromoCodeLimitAsync_Partner_Is_Bloked_Successfull()
+        public async Task SetPartnerPromoCodeLimitAsync_IOC_Partner_Is_Bloked_Successfull()
         {
             //Arrange
             var cancellationToken = new CancellationTokenSource().Token;
@@ -175,7 +178,7 @@ namespace PromoCodeTests
         }
 
         [Fact]
-        public async Task SetPartnerPromoCodeLimitAsync_Partner_Limit_Is_Empty_Successfull()
+        public async Task SetPartnerPromoCodeLimitAsync_IOC_Partner_Limit_Is_Empty_Successfull()
         {
             //Arrange
             var cancellationToken = new CancellationTokenSource().Token;
@@ -197,6 +200,10 @@ namespace PromoCodeTests
             //Assert
             await Assert.ThrowsAsync<PartnerLimitIsEmptyException>(async () => await _partnerService.SetPartnerPromoCodeLimitAsync(setPartnerPromoCodeLimitRequestDto, cancellationToken));
 
+        }
+
+        public void Dispose()
+        {
         }
 
 

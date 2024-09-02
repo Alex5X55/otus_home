@@ -26,8 +26,24 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.8" />
       <PackageReference Include="NSwag.AspNetCore" Version="13.5.0" />
       <PackageReference Include="UmbracoCms.Core" Version="8.18.14" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="DIResource.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>DIResource.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="DIResource.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>DIResource.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 
 </Project>

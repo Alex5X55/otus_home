@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.0" />
     <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="xunit" Version="2.9.0" />
@@ -19,6 +21,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure\Infrastructure.Repositories.Implementations\Infrastructure.Repositories.Implementations.csproj" />
+    <ProjectReference Include="..\Otus.Teaching.PromoCodeFactory.DataAccess\Otus.Teaching.PromoCodeFactory.DataAccess.csproj" />
+    <ProjectReference Include="..\Otus.Teaching.PromoCodeFactory.WebHost\Otus.Teaching.PromoCodeFactory.WebHost.csproj" />
     <ProjectReference Include="..\Services\Services.Implementations\Services.Implementations.csproj" />
   </ItemGroup>
 

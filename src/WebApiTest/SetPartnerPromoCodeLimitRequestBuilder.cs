@@ -7,7 +7,7 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PromoCodeTests
+namespace PromoCodeWebApiTest
 {
     public class SetPartnerPromoCodeLimitRequestBuilder
     {

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Cryptography;
 using static Umbraco.Core.Collections.TopoGraph;
 
 namespace Otus.Teaching.PromoCodeFactory.DataAccess.Data
@@ -220,6 +221,62 @@ namespace Otus.Teaching.PromoCodeFactory.DataAccess.Data
 
                 return customers;
             }
+
         }
+
+        public static IEnumerable<Partner> Partners
+        {
+            get
+            {
+                var partnerId = Guid.Parse("F766E2BF-340A-46EA-BFF3-F1700B435001");
+                var partnerBlokedId = Guid.Parse("F766E2BF-340A-46EA-BFF3-F1700B435002");
+                var partners = new List<Partner>()
+                {
+                    new Partner()
+                    {
+                         Id = partnerId,
+                         Name = "СпортМастер",
+                         NumberIssuedPromoCodes = 20,
+                         IsActive = true,
+                         PartnerLimits = new List<PartnerPromoCodeLimit>()
+                         {
+                             new PartnerPromoCodeLimit()
+                             {
+                                 Id = Guid.NewGuid(),
+                                 PartnerId = partnerId,
+                                 CreateDate = DateTime.Now.AddDays(-3),
+                                 CancelDate = DateTime.Now,
+                                 EndDate = DateTime.Now.AddMonths(3),
+                                 Limit = 15
+                             }
+                         }
+
+                    },
+                    new Partner()
+                    {
+                         Id = partnerBlokedId,
+                         Name = "Ашан",
+                         NumberIssuedPromoCodes = 20,
+                         IsActive = false,
+                         PartnerLimits = new List<PartnerPromoCodeLimit>()
+                         {
+                             new PartnerPromoCodeLimit()
+                             {
+                                 Id = Guid.NewGuid(),
+                                 PartnerId = partnerBlokedId,
+                                 CreateDate = DateTime.Now.AddDays(-3),
+                                 CancelDate = DateTime.Now,
+                                 EndDate = DateTime.Now.AddMonths(3),
+                                 Limit = 25
+                             }
+                         }
+
+                    }
+
+                };
+                return partners;
+            }
+        }
+
     }
 }
