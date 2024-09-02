@@ -1,12 +1,12 @@
-name: dotnet pdd2
+name: dotnet1
 
 on: 
   push:
     branches:
-      - main
+      - master
   pull_request:
     branches:
-      - main
+      - master
 
 env:
   TEST_PROJ: 'src/PromoCodeTests'
@@ -21,7 +21,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 3.1.x
+        dotnet-version: 8.0.x
       
     - name: Install dependencies, build and test
       working-directory: ${{ env.TEST_PROJ }}
