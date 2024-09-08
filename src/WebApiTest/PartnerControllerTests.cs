@@ -20,36 +20,48 @@ using System.Globalization;
 
 namespace PromoCodeWebApiTest
 {
-    public class PartnerControllerTests
+    public class PartnerControllerTests : IClassFixture<ControllerTestFixture>
     {
         private PartnersController _partnersController;
 
-        private Mock<IPartnerService> _partnerServiceMock = new Mock<IPartnerService>();
-        private Mock<IMapper> _partnerMapperMock = new Mock<IMapper>();
-        private Mock<ILogger<PartnersController>> _partnerLoggerMock = new Mock<ILogger<PartnersController>>();
+        private Mock<IPartnerService> _partnerServiceMock; ///= new Mock<IPartnerService>();
+        private Mock<IMapper> _partnerMapperMock; ///= new Mock<IMapper>();
+        private Mock<ILogger<PartnersController>> _partnerLoggerMock; /// = new Mock<ILogger<PartnersController>>();
 
         private Guid id;
         private SetPartnerPromoCodeLimitRequest setPartnerPromoCodeLimitRequest;
         private SetPartnerPromoCodeLimitRequestDto setPartnerPromoCodeLimitRequestDto;
         private CancellationToken cancellationToken;
 
-        public PartnerControllerTests()
+        public PartnerControllerTests(ControllerTestFixture controllerTestFixture)
         {
-            _partnersController = new PartnersController(_partnerServiceMock.Object,
-                _partnerMapperMock.Object,
-                _partnerLoggerMock.Object);
+            _partnerServiceMock = controllerTestFixture.PartnerServiceMock;
+            _partnerMapperMock = controllerTestFixture.PartnerMapperMock;
+            _partnerLoggerMock = controllerTestFixture.PartnerLoggerMock; 
 
-            id = Guid.NewGuid();
-            setPartnerPromoCodeLimitRequest = new SetPartnerPromoCodeLimitRequestBuilder()
-                .WithEndDate(DateTime.Now.AddMonths(1))
-                .WithLimit(18)
-                .Build();
-            setPartnerPromoCodeLimitRequestDto = new SetPartnerPromoCodeLimitRequestDtoBuilder()
-                .WithPartnerId(Guid.NewGuid())
-                .WithEndDate(DateTime.Now.AddDays(5))
-                .WithLimit(44)
-                .Build();
-            cancellationToken = new CancellationTokenSource().Token;
+           _partnersController = controllerTestFixture.PartnersController;
+            //new PartnersController(_partnerServiceMock.Object,
+            //_partnerMapperMock.Object,
+            //_partnerLoggerMock.Object);
+
+            //id = Guid.NewGuid();
+            id = controllerTestFixture.Id;
+
+            setPartnerPromoCodeLimitRequest = controllerTestFixture.SetPartnerPromoCodeLimitRequest;  
+            //ControllerTestData.InitData();
+            //setPartnerPromoCodeLimitRequest = new SetPartnerPromoCodeLimitRequestBuilder()
+            //    .WithEndDate(DateTime.Now.AddMonths(1))
+            //    .WithLimit(18)
+            //    .Build();
+
+            setPartnerPromoCodeLimitRequestDto = controllerTestFixture.SetPartnerPromoCodeLimitRequestDto;
+            //setPartnerPromoCodeLimitRequestDto = new SetPartnerPromoCodeLimitRequestDtoBuilder()
+            //    .WithPartnerId(Guid.NewGuid())
+            //    .WithEndDate(DateTime.Now.AddDays(5))
+            //    .WithLimit(44)
+            //    .Build();
+
+            cancellationToken = controllerTestFixture.CancellationToken; //new CancellationTokenSource().Token;
         }
 
 
